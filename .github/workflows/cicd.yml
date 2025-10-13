@@ -26,9 +26,9 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR
         run: |
-          docker build -t docker-ecr:v1 .
-          docker tag docker-ecr:v1 public.ecr.aws/w4l9y5r3/docker-ecr:v1
-          docker push public.ecr.aws/w4l9y5r3/docker-ecr:v1
+          docker build -t docker-ecr:v2 .
+          docker tag docker-ecr:v2 public.ecr.aws/w4l9y5r3/docker-ecr:v2
+          docker push public.ecr.aws/w4l9y5r3/docker-ecr:v2
 
   deploy:
     runs-on: ubuntu-latest
@@ -40,4 +40,7 @@ jobs:
           chmod 600 mykey.pem
           cat mykey.pem
         
-        
+
+          ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@204.236.208.78 "docker pull public.ecr.aws/w4l9y5r3/docker-ecr:v2"
+
+          ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@204.236.208.78 "docker run -d -p 80:80 public.ecr.aws/w4l9y5r3/docker-ecr:v2"
