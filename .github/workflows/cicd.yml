@@ -26,9 +26,9 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR
         run: |
-          docker build -t indomak-ecr:latest .
-          docker tag indomak-ecr:latest public.ecr.aws/w4l9y5r3/indomak-ecr:latest
-          docker push public.ecr.aws/w4l9y5r3/indomak-ecr:latest
+          docker build -t indomak-ecr:v5 .
+          docker tag indomak-ecr:v5 public.ecr.aws/w4l9y5r3/indomak-ecr:v5
+          docker push public.ecr.aws/w4l9y5r3/indomak-ecr:v5
   deploy:
     runs-on: ubuntu-latest
     needs: build-push
@@ -40,7 +40,9 @@ jobs:
           cat mykey.pem
         
 
-          ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@34.224.37.135 "docker pull public.ecr.aws/w4l9y5r3/indomak-ecr:latest"
+          ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@34.224.37.135 "docker pull public.ecr.aws/w4l9y5r3/indomak-ecr:v5"
 
-          ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@34.224.37.135 "docker run -d --name indomak-ecr-latest-v3 -p 8088:80 public.ecr.aws/w4l9y5r3/indomak-ecr:latest"
+                    ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@34.224.37.135 "docker rm -f indomak-ecr"
+
+          ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@34.224.37.135 "docker run -d --name indomak-ecr -p 8088:80 public.ecr.aws/w4l9y5r3/indomak-ecr:v5"
 
