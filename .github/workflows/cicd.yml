@@ -26,7 +26,7 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR
         run: |
-          docker build -t indomak-ecr .
+          docker build -t indomak-ecr:v1 .
           docker tag indomak-ecr:v1 public.ecr.aws/w4l9y5r3/indomak-ecr:v1
           docker push public.ecr.aws/w4l9y5r3/indomak-ecr:v1
   deploy:
