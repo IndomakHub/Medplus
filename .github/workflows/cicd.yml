@@ -44,5 +44,5 @@ jobs:
 
                     ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@34.224.37.135 "docker rm -f indomak-ecr"
 
-          ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@34.224.37.135 "docker run -d --name indomak-ecr -p 8088:80 public.ecr.aws/w4l9y5r3/indomak-ecr:v5"
+          ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@34.224.37.135 "docker run -d --name indomak-ecr-v5 -p 8088:80 public.ecr.aws/w4l9y5r3/indomak-ecr:v5"
 
